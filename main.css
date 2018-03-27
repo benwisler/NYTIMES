@@ -1,0 +1,33 @@
+body {
+    width: 1100px;
+    margin: 0 auto;
+}
+.forms {
+    width: 1000px;
+    margin: 0 auto;
+
+}
+h3 {
+    background: #2c3e50;
+    color: white;
+    width: 1100px;
+    margin: 0 auto;
+    margin-left: 0;
+    padding-left: 15px;
+}
+.jumbotron {
+    background: #20315a;
+}
+.display-4 {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+.forms {
+    width: 1100px;
+    border: solid 1px #2c3e50;
+    padding: 15px;
+}
+.topArticles {
+    height: auto;
+}

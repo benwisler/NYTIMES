@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">New York Times Search</h1>
+        </div>
+    </div>
+    <br>
+    <div class="searchParameters">
+
+        <h3>Seach Parameters</h3>
+    </div>
+    <div class="forms">
+        <form>
+            <div class="form-group">
+                <label for="formGroupExampleInput">Search Term:</label>
+                <input type="text" class="form-control" id="searchTerm">
+            </div>
+        </form>
+        <label for="formlabel">Number of Records to Retrieve:</label>
+        <form id="records">
+            <select class="form-control" id="formlabel">
+                <option class="option"value="1">Select Number of Articles</option>
+                <option class="option"value="1">1</option>
+                <option class="option"value="5">5</option>
+                <option class="option"value="10">10</option>
+            </select>
+        </form>
+        <br>
+        <form>
+            <div class="form-group">
+                <label for="formGroupExampleInput">Start Year (Optional)</label>
+                <input type="text" class="form-control" id="startYear" value="1851">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">End Year (Optional)</label>
+                <input type="text" class="form-control" id="endYear" value="2018">
+            </div>
+
+        </form>
+        <button type="button" id="search" class="btn btn-secondary">Search</button>
+        <button type="button" id="clear" class="btn btn-secondary">Clear Results</button>
+    </div>
+    </div>
+    </div>
+    <br>
+    <div class="topArticles">
+        <h3>Top Articles</h3>
+        <div class="forms" id="articles">
+            <br>
+            <br>
+            <br>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+    var one = 1;
+    var five = 5;
+    var ten = 10;
+    
+            // This .on("click") function will trigger the AJAX Call
+        $("#search").on("click", function (event) {
+            // Preventing the submit button from trying to submit the form
+            // We're optionally using a form so the user may hit Enter to search instead of clicking the button
+            event.preventDefault();
+
+            // Here we grab the text from the input box
+            var searchButton = $("#searchTerm").val();
+            $("#clear").on("click", function() {
+                $("#articles").empty();
+            })
+            ;
+            // Here we construct our URL
+            var queryURL = "start of URL" + searchButton + "f4b1a253a56d406b91b41dabf145293a";
+            var searchTerm = "obama";
+            var numberOfRecords = 5;
+            var startYear = 1851;
+            var endYear = 2018;
+            startYear = $("#startYear").val();
+            endYear = $("#endYear").val();
+            var queryURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + searchButton + "&page=0&begin_date=" + startYear + "0101&end_date=" + endYear + "1231&api-key=51b162eb60a74da781c6627f4fbc0307"
+            // $("#search").on('click', function() {
+                numberOfRecords = $("#formlabel").val();
+                console.log("record: " + numberOfRecords);
+            // })
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+                for (i = 0; i < numberOfRecords; i++) {
+                    var headline = (response.response.docs[i].headline.main);
+                    console.log("headline: " + headline);
+                    var byline = (response.response.docs[i].byline.original);
+                    var section = (response.response.docs[i].section_name);
+                    var pubdate = (response.response.docs[i].pub_date);
+                    var weburl = (response.response.docs[i].web_url);
+                    //make a card w all of these things filled in
+                    var newCard = $("<div></div>");
+                    $(newCard).append("<h2>" + headline + "</h2>" +
+                    "<br><p>"+ byline +
+                    "<br>Section: " + section + "<br>" + pubdate + "<br>" + weburl + "</p>");
+                    
+                    console.log("byline: " + byline);
+                    console.log("section: " + section);
+                    console.log("pubdate: " + pubdate);
+                    console.log("weburl: " + weburl);
+                    $("#articles").append(newCard)
+                }
+            })
+
+        });
+
+
+    </script>
+</body>
+
+</html>
